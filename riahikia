@@ -1,16 +1,1 @@
-[
-    {
-        "server": "127.0.0.1",
-        "server_port": 4444,
-        "password": "98cb61c8-76dc-4d0e-939c-3ed9e11327b5",
-        "method": "chacha20-ietf-poly1305",
-        "remarks": "sstest"
-    },
-    {
-        "server": "127.0.0.1",
-        "server_port": 4443,
-        "password": "98cb61c8-76dc-4d0e-939c-3ed9e11327b5",
-        "method": "chacha20-ietf-poly1305",
-        "remarks": "sstest1"
-    }
-]
+ss://YWVzLTI1Ni1nY206Q3ltQ2Q0QUJONWFCTUoyWA==@46.246.98.130:8388#Sweden%20#16978%20/%20OutlineKeys.com
