@@ -1,1 +1,16 @@
-ssr://MTk4LjE5OS4xMDEuMTUyOjgzODg6b3JpZ2luOmFlcy0yNTYtY2ZiOnBsYWluOi8_b2Jmc3BhcmFtPSZwcm90b3BhcmFtPSZyZW1hcmtzPVUyaGhaRzkzYzI5amEzTlMmZ3JvdXA9UkdWbVlYVnNkQ0JIY205MWNB
+[
+    {
+        "server": "127.0.0.1",
+        "server_port": 4444,
+        "password": "98cb61c8-76dc-4d0e-939c-3ed9e11327b5",
+        "method": "chacha20-ietf-poly1305",
+        "remarks": "sstest"
+    },
+    {
+        "server": "127.0.0.1",
+        "server_port": 4443,
+        "password": "98cb61c8-76dc-4d0e-939c-3ed9e11327b5",
+        "method": "chacha20-ietf-poly1305",
+        "remarks": "sstest1"
+    }
+]
