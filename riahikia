@@ -1,2 +1,4 @@
-server,port,id,alterId,security,network,type
-example.com,443,abcdefg-1234-5678-9abc-defghijklmnop,0,aes-256-gcm,ws,none
+ssconf://ainita.s3.eu-north-1.amazonaws.com/AinitaServer-1.csv#🤎Riahikia 
+ssconf://ainita.s3.eu-north-1.amazonaws.com/AinitaServer-2.csv#💖Riahikia 
+ssconf://ainita.s3.eu-north-1.amazonaws.com/AinitaServer-3.csv#💜Riahikia
+ssconf://ainita.s3.eu-north-1.amazonaws.com/AinitaServer-4.csv#💛Riahikia
