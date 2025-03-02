@@ -1,2 +1,0 @@
-server,port,id,alterId,security,network,type
-example.com,443,abcdefg-1234-5678-9abc-defghijklmnop,0,aes-256-gcm,ws,none
