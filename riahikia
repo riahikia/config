@@ -1,4 +1,58 @@
-ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpueFMxYTdKTmxJY2JzTjhRNEVLTDV0@sto1.g.edgeservers.org:36632#Riahikia%20%C2%AE%EF%B8%8F%F0%9F%87%AE%F0%9F%87%B7_1
-ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTo3MFh3ZzBTYkhTTDhDdUNraUx1R2hP@sto2.g.edgeservers.org:15128#Riahikia%20%C2%AE%EF%B8%8F%F0%9F%87%AE%F0%9F%87%B7_2
-ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpXVlUyN0xxdUFNT2VYbVllU3RJODk3@sto3.g.edgeservers.org:32448#Riahikia%20%C2%AE%EF%B8%8F%F0%9F%87%AE%F0%9F%87%B7_3
-ss://Y2hhY2hhMjAtaWV0Zi1wb2x5MTMwNTpQSTNuY3hGMkdQdVBpQjFsNWdpdGNP@sto4.g.edgeservers.org:63418#Riahikia%20%C2%AE%EF%B8%8F%F0%9F%87%AE%F0%9F%87%B7_4
+#!/bin/bash
+
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+echo -e "${GREEN}شروع اتصال خودکار به سریع‌ترین سرور Shadowsocks...${NC}"
+
+# نصب shadowsocks-libev (اگه نصب نشده)
+if ! command -v ss-local &> /dev/null; then
+    echo -e "${GREEN}در حال نصب shadowsocks-libev...${NC}"
+    apt update && apt install -y shadowsocks-libev
+fi
+
+# لیست سرورها و مشخصات
+SERVERS=(
+    "sto1.g.edgeservers.org 36632 nxS1a7JNlICbsN8Q4EKL5t"
+    "sto2.g.edgeservers.org 15128 70Xwg0SbHSL8CuCkiLuGhO"
+    "sto3.g.edgeservers.org 32448 WVU27LquAMOeXmYeStI897"
+    "sto4.g.edgeservers.org 63418 PI3ncxF2GPuPiB1l5gitcO"
+)
+
+METHOD="chacha20-ietf-poly1305"
+
+# تابع تست پینگ
+get_ping() {
+    ping -c 1 -W 1 $1 | grep time= | awk -F'time=' '{print $2}' | awk '{print $1}'
+}
+
+# پیدا کردن سریع‌ترین سرور
+BEST_PING=9999
+for entry in "${SERVERS[@]}"; do
+    set -- $entry
+    SERVER=$1
+    PORT=$2
+    PASSWORD=$3
+    PING=$(get_ping $SERVER)
+    echo -e "${GREEN}سرور $SERVER پینگ $PING ms${NC}"
+    if [[ ! -z "$PING" ]] && (( $(echo "$PING < $BEST_PING" | bc -l) )); then
+        BEST_PING=$PING
+        BEST_SERVER=$SERVER
+        BEST_PORT=$PORT
+        BEST_PASSWORD=$PASSWORD
+    fi
+done
+
+if [ -n "$BEST_SERVER" ]; then
+    echo -e "${GREEN}سریع‌ترین سرور: $BEST_SERVER با پینگ $BEST_PING ms${NC}"
+else
+    echo "هیچ سروری پیدا نشد! خروج..."
+    exit 1
+fi
+
+pkill ss-local
+
+nohup ss-local -s "$BEST_SERVER" -p "$BEST_PORT" -k "$BEST_PASSWORD" -m "$METHOD" -l 1080 &
+
+echo -e "${GREEN}وصل شد به $BEST_SERVER !${NC}"
+echo "پروکسی لوکال روی 127.0.0.1:1080 فعاله."
