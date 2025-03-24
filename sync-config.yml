@@ -15,7 +15,7 @@ jobs:
 
       - name: Fetch external config file
         run: |
-          curl -o configs.txt https://raw.githubusercontent.com/4n0nymou3/ss-config-updater/refs/heads/main/configs.txt
+          curl -o riahikia https://raw.githubusercontent.com/4n0nymou3/ss-config-updater/refs/heads/main/configs.txt
 
       - name: Set GitHub remote for repository
         run: |
@@ -25,6 +25,6 @@ jobs:
         run: |
           git config --global user.name "Your Name"
           git config --global user.email "your-email@example.com"
-          git add configs.txt
+          git add riahikia
           git commit -m "Updated config from external source"
           git push origin main
