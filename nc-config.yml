@@ -1,0 +1,26 @@
+name: Sync External Config
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  sync-config:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Fetch external config file
+        run: |
+          curl -o configs.txt https://raw.githubusercontent.com/4n0nymou3/ss-config-updater/refs/heads/main/configs.txt
+
+      - name: Commit the updated config file
+        run: |
+          git config --global user.name "Your Name"
+          git config --global user.email "your-email@example.com"
+          git add configs.txt
+          git commit -m "Updated config from external source"
+          git push
