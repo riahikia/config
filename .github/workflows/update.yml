@@ -1,0 +1,37 @@
+name: Update riahikia File
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+jobs:
+  update-file:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download pagecloud config
+        run: curl -o riahikia https://riahikia.pages.dev/sub/bdb980bd-5830-4359-9f4c-22f28841cbb6
+
+      - name: Check if the file has changed
+        run: |
+          if ! git diff --exit-code riahikia; then
+            exit 1
+          else
+            exit 0
+          fi
+        continue-on-error: true
+
+      - name: Commit and Push changes
+        if: failure()
+        run: |
+          git config --global user.name "riahikia"
+          git config --global user.email "iinstagood@gmail.com"
+          git add riahikia
+          git commit -m "Automatic update"
+          git push
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
