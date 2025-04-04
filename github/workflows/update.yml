@@ -1,0 +1,39 @@
+name: Update riahikia File
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # هر 30 دقیقه یک بار اجرا می‌شود.
+  workflow_dispatch:
+
+jobs:
+  update-file:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download pagecloud config
+        run: curl -o riahikia https://riahikia.pages.dev/sub/bdb980bd-5830-4359-9f4c-22f28841cbb6
+
+      - name: Check if the file has changed
+        run: |
+          if ! git diff --exit-code riahikia; then
+            echo "Changes detected. Proceeding to commit and push."
+            exit 1
+          else
+            echo "No changes detected. Exiting."
+            exit 0
+          fi
+        continue-on-error: true
+
+      - name: Commit and Push changes
+        if: failure()
+        run: |
+          git config --global user.name "ابوالفضل ریاحی کیا"
+          git config --global user.email "YourEmail@example.com"
+          git add riahikia
+          git commit -m "Automatic update of riahikia file from PageCloud"
+          git push
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
